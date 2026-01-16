@@ -9,6 +9,7 @@ from backend.routes import (
     clients_bp,
     dashboard_bp,
     events_bp,
+    export_bp,
     policies_bp,
     reminders_bp,
     settings_bp,
@@ -24,6 +25,7 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(reminders_bp)
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(settings_bp)
+    app.register_blueprint(export_bp)
 
 
 
