@@ -7,10 +7,24 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
 
 from backend.emailer import send_email
-from backend.models import Reminder, db
+from backend.models import Reminder, UserConfig, db
 
 
 logger = logging.getLogger(__name__)
+
+
+def _get_send_hour(app: Flask) -> int:
+    with app.app_context():
+        try:
+            user_config = UserConfig.query.first()
+        except Exception:
+            logger.exception("Failed to load UserConfig for scheduler")
+            user_config = None
+
+    send_hour = user_config.send_hour if user_config and user_config.send_hour is not None else 8
+    if not isinstance(send_hour, int) or not 0 <= send_hour <= 23:
+        return 8
+    return send_hour
 
 
 def _build_reminder_body(reminder: Reminder) -> str:
@@ -55,11 +69,12 @@ def send_due_reminders(app: Flask) -> None:
 
 
 def init_scheduler(app: Flask) -> BackgroundScheduler:
+    send_hour = _get_send_hour(app)
     scheduler = BackgroundScheduler()
     scheduler.add_job(
         send_due_reminders,
         "cron",
-        hour=8,
+        hour=send_hour,
         minute=0,
         args=[app],
         id="daily_reminder_sender",

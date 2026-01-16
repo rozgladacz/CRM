@@ -5,7 +5,14 @@ from flask import Flask
 from backend.auth import init_auth
 from backend.config import Config
 from backend.models import db
-from backend.routes import clients_bp, events_bp, policies_bp, reminders_bp, dashboard_bp
+from backend.routes import (
+    clients_bp,
+    dashboard_bp,
+    events_bp,
+    policies_bp,
+    reminders_bp,
+    settings_bp,
+)
 from backend.scheduler import init_scheduler
 
 
@@ -16,6 +23,7 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(events_bp)
     app.register_blueprint(reminders_bp)
     app.register_blueprint(dashboard_bp)
+    app.register_blueprint(settings_bp)
 
 
 

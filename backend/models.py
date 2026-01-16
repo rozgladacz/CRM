@@ -80,6 +80,12 @@ class UserConfig(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
+    mail_server = db.Column(db.String(255), nullable=True)
+    mail_port = db.Column(db.Integer, nullable=True)
+    mail_use_tls = db.Column(db.Boolean, default=True, nullable=True)
+    mail_username = db.Column(db.String(255), nullable=True)
+    mail_password = db.Column(db.String(255), nullable=True)
+    send_hour = db.Column(db.Integer, default=8, nullable=False)
     strefa_czasowa = db.Column(db.String(120), nullable=True)
     dni_przed_wygasnieciem = db.Column(db.Integer, default=30, nullable=False)
     aktywne_powiadomienia = db.Column(db.Boolean, default=True, nullable=False)
