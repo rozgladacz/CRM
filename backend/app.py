@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from flask import Flask
 
+from backend.auth import init_auth
 from backend.config import Config
 from backend.models import db
-from backend.routes import clients_bp, events_bp, policies_bp, reminders_bp
+from backend.routes import clients_bp, events_bp, policies_bp, reminders_bp, dashboard_bp
 
 
 def register_blueprints(app: Flask) -> None:
@@ -13,6 +14,7 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(policies_bp)
     app.register_blueprint(events_bp)
     app.register_blueprint(reminders_bp)
+    app.register_blueprint(dashboard_bp)
 
 
 
@@ -26,6 +28,7 @@ def create_app() -> Flask:
     with app.app_context():
         db.create_all()
 
+    init_auth(app)
     register_blueprints(app)
 
     return app

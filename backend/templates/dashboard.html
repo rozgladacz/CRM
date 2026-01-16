@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}" />
+  </head>
+  <body>
+    <main class="dashboard">
+      <header class="dashboard__header">
+        <h1>Dashboard przypomnień</h1>
+        <p>Podgląd zaległych, dzisiejszych oraz nadchodzących przypomnień.</p>
+      </header>
+
+      <section class="dashboard__section">
+        <h2>Zaległe</h2>
+        {% if overdue %}
+        <ul class="reminder-list">
+          {% for item in overdue %}
+          <li class="reminder-card">
+            <div class="reminder-card__meta">
+              <span class="status-badge {{ item.status_class }}">{{ item.status_label }}</span>
+              <time datetime="{{ item.reminder.data_przypomnienia.isoformat() }}">
+                {{ item.reminder.data_przypomnienia.strftime('%Y-%m-%d %H:%M') }}
+              </time>
+            </div>
+            <div class="reminder-card__content">
+              <h3>{{ item.reminder.tresc }}</h3>
+              <p>
+                Klient: {{ item.reminder.client.imie }} {{ item.reminder.client.nazwisko }}
+              </p>
+              {% if item.reminder.policy %}
+              <p>Polisa: {{ item.reminder.policy.numer_polisy }}</p>
+              {% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-state">Brak zaległych przypomnień.</p>
+        {% endif %}
+      </section>
+
+      <section class="dashboard__section">
+        <h2>Dziś</h2>
+        {% if today %}
+        <ul class="reminder-list">
+          {% for item in today %}
+          <li class="reminder-card">
+            <div class="reminder-card__meta">
+              <span class="status-badge {{ item.status_class }}">{{ item.status_label }}</span>
+              <time datetime="{{ item.reminder.data_przypomnienia.isoformat() }}">
+                {{ item.reminder.data_przypomnienia.strftime('%Y-%m-%d %H:%M') }}
+              </time>
+            </div>
+            <div class="reminder-card__content">
+              <h3>{{ item.reminder.tresc }}</h3>
+              <p>
+                Klient: {{ item.reminder.client.imie }} {{ item.reminder.client.nazwisko }}
+              </p>
+              {% if item.reminder.policy %}
+              <p>Polisa: {{ item.reminder.policy.numer_polisy }}</p>
+              {% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-state">Brak przypomnień na dziś.</p>
+        {% endif %}
+      </section>
+
+      <section class="dashboard__section">
+        <h2>Następne 7 dni</h2>
+        {% if upcoming %}
+        <ul class="reminder-list">
+          {% for item in upcoming %}
+          <li class="reminder-card">
+            <div class="reminder-card__meta">
+              <span class="status-badge {{ item.status_class }}">{{ item.status_label }}</span>
+              <time datetime="{{ item.reminder.data_przypomnienia.isoformat() }}">
+                {{ item.reminder.data_przypomnienia.strftime('%Y-%m-%d %H:%M') }}
+              </time>
+            </div>
+            <div class="reminder-card__content">
+              <h3>{{ item.reminder.tresc }}</h3>
+              <p>
+                Klient: {{ item.reminder.client.imie }} {{ item.reminder.client.nazwisko }}
+              </p>
+              {% if item.reminder.policy %}
+              <p>Polisa: {{ item.reminder.policy.numer_polisy }}</p>
+              {% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-state">Brak przypomnień w najbliższych 7 dniach.</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>
