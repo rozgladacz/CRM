@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Zdarzenie - Szczegóły{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Zdarzenie ZD-2024-031</h1>
+  <p>Zgłoszenie szkody mieszkaniowej klienta Anna Kowalska.</p>
+</section>
+
+<section class="details-grid">
+  <div class="card">
+    <h2>Dane zgłoszenia</h2>
+    <ul>
+      <li><strong>Rodzaj:</strong> Zalanie</li>
+      <li><strong>Data zdarzenia:</strong> 08.03.2024</li>
+      <li><strong>Status:</strong> W trakcie</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Opis</h2>
+    <p>Klient zgłasza zalanie kuchni po awarii instalacji wodnej. Wymagany kosztorys napraw.</p>
+  </div>
+</section>
+
+<section class="actions">
+  <a class="button" href="/events/1/edit">Edytuj zdarzenie</a>
+  <a class="button secondary" href="/events">Wróć do listy</a>
+</section>
+{% endblock %}

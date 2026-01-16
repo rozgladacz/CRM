@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Zdarzenie - Formularz{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Nowe zdarzenie</h1>
+  <p>Dodaj zgłoszenie szkody lub innego zdarzenia.</p>
+</section>
+
+<form class="form">
+  <div class="form-row">
+    <label>Numer zgłoszenia
+      <input type="text" placeholder="np. ZD-2024-031">
+    </label>
+    <label>Klient
+      <input type="text" placeholder="np. Anna Kowalska">
+    </label>
+  </div>
+  <div class="form-row">
+    <label>Rodzaj zdarzenia
+      <select>
+        <option>Zalanie</option>
+        <option>Stłuczka</option>
+        <option>Kradzież</option>
+        <option>Inne</option>
+      </select>
+    </label>
+    <label>Status
+      <select>
+        <option>Nowe</option>
+        <option>W trakcie</option>
+        <option>Zamknięte</option>
+      </select>
+    </label>
+  </div>
+  <div class="form-row">
+    <label>Data zdarzenia
+      <input type="date">
+    </label>
+    <label>Powiązana polisa
+      <input type="text" placeholder="np. MH-2024-019">
+    </label>
+  </div>
+  <label>Opis zdarzenia
+    <textarea rows="4" placeholder="Szczegółowy opis zdarzenia..."></textarea>
+  </label>
+  <div class="form-actions">
+    <button type="submit">Zapisz zdarzenie</button>
+    <a class="button secondary" href="/events">Anuluj</a>
+  </div>
+</form>
+{% endblock %}

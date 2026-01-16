@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Ustawienia - CRM{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Ustawienia</h1>
+  <p>Konfiguruj preferencje aplikacji, powiadomienia i użytkowników.</p>
+</section>
+
+<section class="card">
+  <h2>Powiadomienia</h2>
+  <form>
+    <label>
+      <input type="checkbox" checked>
+      Wysyłaj e-mail o kończących się polisach
+    </label>
+    <label>
+      <input type="checkbox">
+      Wysyłaj przypomnienia SMS
+    </label>
+    <button type="submit">Zapisz zmiany</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Przypomnienie - Szczegóły{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Odnowienie polisy</h1>
+  <p>Kontakt z klientką Anna Kowalska przed końcem polisy.</p>
+</section>
+
+<section class="details-grid">
+  <div class="card">
+    <h2>Informacje</h2>
+    <ul>
+      <li><strong>Termin:</strong> 18.03.2024 10:00</li>
+      <li><strong>Kanał:</strong> Telefon</li>
+      <li><strong>Status:</strong> Zaplanowane</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Notatki</h2>
+    <p>Przygotować propozycję rozszerzenia zakresu ochrony o assistance.</p>
+  </div>
+</section>
+
+<section class="actions">
+  <a class="button" href="/reminders/1/edit">Edytuj przypomnienie</a>
+  <a class="button secondary" href="/reminders">Wróć do listy</a>
+</section>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Przypomnienia - Lista{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Przypomnienia</h1>
+  <p>Lista zaplanowanych kontaktów i follow-upów.</p>
+  <a class="button" href="/reminders/new">Dodaj przypomnienie</a>
+</section>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Temat</th>
+      <th>Klient</th>
+      <th>Termin</th>
+      <th>Kanał</th>
+      <th>Status</th>
+      <th>Akcje</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Odnowienie polisy</td>
+      <td>Anna Kowalska</td>
+      <td>18.03.2024 10:00</td>
+      <td>Telefon</td>
+      <td>Zaplanowane</td>
+      <td><a href="/reminders/1">Szczegóły</a></td>
+    </tr>
+    <tr>
+      <td>Wysłanie oferty</td>
+      <td>Marek Nowak</td>
+      <td>20.03.2024 14:30</td>
+      <td>E-mail</td>
+      <td>Nowe</td>
+      <td><a href="/reminders/2">Szczegóły</a></td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}

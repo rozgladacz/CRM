@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Zdarzenia - Lista{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Zdarzenia</h1>
+  <p>Rejestr zdarzeń i szkód zgłaszanych przez klientów.</p>
+  <a class="button" href="/events/new">Dodaj zdarzenie</a>
+</section>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Numer zgłoszenia</th>
+      <th>Klient</th>
+      <th>Rodzaj</th>
+      <th>Data zdarzenia</th>
+      <th>Status</th>
+      <th>Akcje</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ZD-2024-031</td>
+      <td>Anna Kowalska</td>
+      <td>Zalanie</td>
+      <td>08.03.2024</td>
+      <td>W trakcie</td>
+      <td><a href="/events/1">Szczegóły</a></td>
+    </tr>
+    <tr>
+      <td>ZD-2024-032</td>
+      <td>Marek Nowak</td>
+      <td>Stłuczka</td>
+      <td>12.03.2024</td>
+      <td>Nowe</td>
+      <td><a href="/events/2">Szczegóły</a></td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}
