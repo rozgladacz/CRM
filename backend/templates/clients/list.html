@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Lista klientów</h1>
+<a href="{{ url_for('clients.create_client') }}">Dodaj klienta</a>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>E-mail</th>
+            <th>Telefon</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for client in clients %}
+        <tr>
+            <td>{{ client.id }}</td>
+            <td>{{ client.imie }}</td>
+            <td>{{ client.nazwisko }}</td>
+            <td>{{ client.email or '-' }}</td>
+            <td>{{ client.telefon or '-' }}</td>
+            <td>
+                <a href="{{ url_for('clients.client_detail', client_id=client.id) }}">Szczegóły</a>
+                <a href="{{ url_for('clients.edit_client', client_id=client.id) }}">Edytuj</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">Brak klientów.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

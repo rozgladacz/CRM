@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Szczegóły klienta</h1>
+<p><strong>Imię:</strong> {{ client.imie }}</p>
+<p><strong>Nazwisko:</strong> {{ client.nazwisko }}</p>
+<p><strong>E-mail:</strong> {{ client.email or '-' }}</p>
+<p><strong>Telefon:</strong> {{ client.telefon or '-' }}</p>
+<p><strong>Adres:</strong> {{ client.adres or '-' }}</p>
+<div class="actions">
+    <a href="{{ url_for('clients.edit_client', client_id=client.id) }}">Edytuj</a>
+    <form method="post" action="{{ url_for('clients.delete_client', client_id=client.id) }}" style="display:inline;">
+        <button type="submit">Usuń</button>
+    </form>
+    <a href="{{ url_for('clients.list_clients') }}">Wróć do listy</a>
+</div>
+{% endblock %}

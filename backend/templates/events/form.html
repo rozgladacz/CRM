@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{% if mode == 'edit' %}Edytuj wydarzenie{% else %}Dodaj wydarzenie{% endif %}</h1>
+<form method="post">
+    <div class="form-row">
+        <label for="tytul">Tytuł *</label>
+        <input id="tytul" name="tytul" type="text" value="{{ form_data.tytul }}" required />
+        {% if errors.tytul %}<div class="error">{{ errors.tytul }}</div>{% endif %}
+    </div>
+    <div class="form-row">
+        <label for="client_id">Klient *</label>
+        <select id="client_id" name="client_id" required>
+            <option value="">Wybierz klienta</option>
+            {% for client in clients %}
+            <option value="{{ client.id }}" {% if form_data.client_id == client.id|string %}selected{% endif %}>
+                {{ client.imie }} {{ client.nazwisko }}
+            </option>
+            {% endfor %}
+        </select>
+        {% if errors.client_id %}<div class="error">{{ errors.client_id }}</div>{% endif %}
+    </div>
+    <div class="form-row">
+        <label for="policy_id">Polisa</label>
+        <select id="policy_id" name="policy_id">
+            <option value="">Brak</option>
+            {% for policy in policies %}
+            <option value="{{ policy.id }}" {% if form_data.policy_id == policy.id|string %}selected{% endif %}>
+                {{ policy.numer_polisy }} ({{ policy.client.imie }} {{ policy.client.nazwisko }})
+            </option>
+            {% endfor %}
+        </select>
+        {% if errors.policy_id %}<div class="error">{{ errors.policy_id }}</div>{% endif %}
+    </div>
+    <div class="form-row">
+        <label for="data_wydarzenia">Data i godzina *</label>
+        <input id="data_wydarzenia" name="data_wydarzenia" type="datetime-local" value="{{ form_data.data_wydarzenia }}" required />
+        {% if errors.data_wydarzenia %}<div class="error">{{ errors.data_wydarzenia }}</div>{% endif %}
+    </div>
+    <div class="form-row">
+        <label for="opis">Opis</label>
+        <textarea id="opis" name="opis" rows="4">{{ form_data.opis }}</textarea>
+    </div>
+    <div class="actions">
+        <button type="submit">Zapisz</button>
+        <a href="{% if mode == 'edit' %}{{ url_for('events.event_detail', event_id=event.id) }}{% else %}{{ url_for('events.list_events') }}{% endif %}">Anuluj</a>
+    </div>
+</form>
+{% endblock %}

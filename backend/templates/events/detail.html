@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Szczegóły wydarzenia</h1>
+<p><strong>Tytuł:</strong> {{ event.tytul }}</p>
+<p><strong>Opis:</strong> {{ event.opis or '-' }}</p>
+<p><strong>Data wydarzenia:</strong> {{ event.data_wydarzenia }}</p>
+<p><strong>Klient:</strong> {{ event.client.imie }} {{ event.client.nazwisko }}</p>
+<p><strong>Polisa:</strong> {{ event.policy.numer_polisy if event.policy else '-' }}</p>
+<div class="actions">
+    <a href="{{ url_for('events.edit_event', event_id=event.id) }}">Edytuj</a>
+    <form method="post" action="{{ url_for('events.delete_event', event_id=event.id) }}" style="display:inline;">
+        <button type="submit">Usuń</button>
+    </form>
+    <a href="{{ url_for('events.list_events') }}">Wróć do listy</a>
+</div>
+{% endblock %}

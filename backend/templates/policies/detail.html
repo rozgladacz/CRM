@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Szczegóły polisy</h1>
+<p><strong>Numer polisy:</strong> {{ policy.numer_polisy }}</p>
+<p><strong>Klient:</strong> {{ policy.client.imie }} {{ policy.client.nazwisko }}</p>
+<p><strong>Produkt:</strong> {{ policy.produkt or '-' }}</p>
+<p><strong>Data początku:</strong> {{ policy.data_poczatku }}</p>
+<p><strong>Data końca:</strong> {{ policy.data_konca or '-' }}</p>
+<p><strong>Składka:</strong> {{ policy.skladka or '-' }}</p>
+<p><strong>Status:</strong> {{ policy.status or '-' }}</p>
+<div class="actions">
+    <a href="{{ url_for('policies.edit_policy', policy_id=policy.id) }}">Edytuj</a>
+    <form method="post" action="{{ url_for('policies.delete_policy', policy_id=policy.id) }}" style="display:inline;">
+        <button type="submit">Usuń</button>
+    </form>
+    <a href="{{ url_for('policies.list_policies') }}">Wróć do listy</a>
+</div>
+{% endblock %}

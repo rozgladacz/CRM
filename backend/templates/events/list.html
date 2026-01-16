@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Lista wydarzeń</h1>
+<a href="{{ url_for('events.create_event') }}">Dodaj wydarzenie</a>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tytuł</th>
+            <th>Data</th>
+            <th>Klient</th>
+            <th>Polisa</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for event in events %}
+        <tr>
+            <td>{{ event.id }}</td>
+            <td>{{ event.tytul }}</td>
+            <td>{{ event.data_wydarzenia }}</td>
+            <td>{{ event.client.imie }} {{ event.client.nazwisko }}</td>
+            <td>{{ event.policy.numer_polisy if event.policy else '-' }}</td>
+            <td>
+                <a href="{{ url_for('events.event_detail', event_id=event.id) }}">Szczegóły</a>
+                <a href="{{ url_for('events.edit_event', event_id=event.id) }}">Edytuj</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">Brak wydarzeń.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

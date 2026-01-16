@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Lista polis</h1>
+<a href="{{ url_for('policies.create_policy') }}">Dodaj polisę</a>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Numer polisy</th>
+            <th>Klient</th>
+            <th>Produkt</th>
+            <th>Status</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for policy in policies %}
+        <tr>
+            <td>{{ policy.id }}</td>
+            <td>{{ policy.numer_polisy }}</td>
+            <td>{{ policy.client.imie }} {{ policy.client.nazwisko }}</td>
+            <td>{{ policy.produkt or '-' }}</td>
+            <td>{{ policy.status or '-' }}</td>
+            <td>
+                <a href="{{ url_for('policies.policy_detail', policy_id=policy.id) }}">Szczegóły</a>
+                <a href="{{ url_for('policies.edit_policy', policy_id=policy.id) }}">Edytuj</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">Brak polis.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
