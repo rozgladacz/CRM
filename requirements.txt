@@ -1,1 +1,5 @@
-# Dependencies will be added later.
+Flask
+Flask-SQLAlchemy
+APScheduler
+waitress
+Flask-Login  # optional
