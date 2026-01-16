@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import date
 
 from flask import Blueprint, redirect, render_template, request, url_for
+from sqlalchemy import or_
 
 from backend.models import Client, Policy, db
 from backend.routes.utils import clean_str, parse_date, parse_decimal, to_int
@@ -12,8 +13,21 @@ policies_bp = Blueprint("policies", __name__, url_prefix="/policies")
 
 @policies_bp.get("/")
 def list_policies() -> str:
-    policies = Policy.query.order_by(Policy.data_poczatku.desc()).all()
-    return render_template("policies/list.html", policies=policies)
+    search_query = clean_str(request.args.get("q"))
+    query = Policy.query
+    if search_query:
+        like_pattern = f"%{search_query}%"
+        query = query.join(Client).filter(
+            or_(
+                Policy.numer_polisy.ilike(like_pattern),
+                Policy.produkt.ilike(like_pattern),
+                Policy.status.ilike(like_pattern),
+                Client.imie.ilike(like_pattern),
+                Client.nazwisko.ilike(like_pattern),
+            )
+        )
+    policies = query.order_by(Policy.data_poczatku.desc()).all()
+    return render_template("policies/list.html", policies=policies, search_query=search_query)
 
 
 @policies_bp.get("/<int:policy_id>")

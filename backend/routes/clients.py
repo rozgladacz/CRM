@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from flask import Blueprint, redirect, render_template, request, url_for
+from sqlalchemy import or_
 
 from backend.models import Client, db
 from backend.routes.utils import clean_str, validate_email
@@ -10,8 +11,21 @@ clients_bp = Blueprint("clients", __name__, url_prefix="/clients")
 
 @clients_bp.get("/")
 def list_clients() -> str:
-    clients = Client.query.order_by(Client.nazwisko.asc(), Client.imie.asc()).all()
-    return render_template("clients/list.html", clients=clients)
+    search_query = clean_str(request.args.get("q"))
+    query = Client.query
+    if search_query:
+        like_pattern = f"%{search_query}%"
+        query = query.filter(
+            or_(
+                Client.imie.ilike(like_pattern),
+                Client.nazwisko.ilike(like_pattern),
+                Client.email.ilike(like_pattern),
+                Client.telefon.ilike(like_pattern),
+                Client.adres.ilike(like_pattern),
+            )
+        )
+    clients = query.order_by(Client.nazwisko.asc(), Client.imie.asc()).all()
+    return render_template("clients/list.html", clients=clients, search_query=search_query)
 
 
 @clients_bp.get("/<int:client_id>")
