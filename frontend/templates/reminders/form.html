@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Przypomnienie - Formularz{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Nowe przypomnienie</h1>
+  <p>Ustaw termin oraz sposób kontaktu z klientem.</p>
+</section>
+
+<form class="form">
+  <div class="form-row">
+    <label>Temat
+      <input type="text" placeholder="np. Odnowienie polisy">
+    </label>
+    <label>Klient
+      <input type="text" placeholder="np. Anna Kowalska">
+    </label>
+  </div>
+  <div class="form-row">
+    <label>Termin
+      <input type="datetime-local">
+    </label>
+    <label>Kanał kontaktu
+      <select>
+        <option>Telefon</option>
+        <option>E-mail</option>
+        <option>Spotkanie</option>
+      </select>
+    </label>
+  </div>
+  <label>Notatka
+    <textarea rows="4" placeholder="Notatka do rozmowy, potrzebne materiały..."></textarea>
+  </label>
+  <div class="form-actions">
+    <button type="submit">Zapisz przypomnienie</button>
+    <a class="button secondary" href="/reminders">Anuluj</a>
+  </div>
+</form>
+{% endblock %}

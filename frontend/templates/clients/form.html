@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Klient - Formularz{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Nowy klient</h1>
+  <p>Wprowadź dane klienta i zapisz je w systemie.</p>
+</section>
+
+<form class="form">
+  <div class="form-row">
+    <label>Imię i nazwisko
+      <input type="text" placeholder="np. Anna Kowalska">
+    </label>
+    <label>Status
+      <select>
+        <option>Aktywny</option>
+        <option>Do kontaktu</option>
+        <option>Nieaktywny</option>
+      </select>
+    </label>
+  </div>
+  <div class="form-row">
+    <label>E-mail
+      <input type="email" placeholder="anna@example.com">
+    </label>
+    <label>Telefon
+      <input type="tel" placeholder="+48 600 000 001">
+    </label>
+  </div>
+  <label>Adres
+    <input type="text" placeholder="ul. Spacerowa 12, 00-100 Warszawa">
+  </label>
+  <label>Notatka
+    <textarea rows="4" placeholder="Preferowana forma kontaktu, ostatnie rozmowy..."></textarea>
+  </label>
+  <div class="form-actions">
+    <button type="submit">Zapisz klienta</button>
+    <a class="button secondary" href="/clients">Anuluj</a>
+  </div>
+</form>
+{% endblock %}

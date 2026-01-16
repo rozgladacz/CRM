@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Polisa - Formularz{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Nowa polisa</h1>
+  <p>Uzupełnij informacje o polisie i przypisz klienta.</p>
+</section>
+
+<form class="form">
+  <div class="form-row">
+    <label>Numer polisy
+      <input type="text" placeholder="np. MH-2024-019">
+    </label>
+    <label>Rodzaj
+      <select>
+        <option>Mieszkaniowa</option>
+        <option>Komunikacyjna</option>
+        <option>Turystyczna</option>
+        <option>Na życie</option>
+      </select>
+    </label>
+  </div>
+  <div class="form-row">
+    <label>Klient
+      <input type="text" placeholder="np. Anna Kowalska">
+    </label>
+    <label>Składka roczna (PLN)
+      <input type="number" placeholder="np. 920">
+    </label>
+  </div>
+  <div class="form-row">
+    <label>Data startu
+      <input type="date">
+    </label>
+    <label>Data końca
+      <input type="date">
+    </label>
+  </div>
+  <label>Zakres ochrony
+    <textarea rows="4" placeholder="Opis zakresu, limity, rozszerzenia..."></textarea>
+  </label>
+  <div class="form-actions">
+    <button type="submit">Zapisz polisę</button>
+    <a class="button secondary" href="/policies">Anuluj</a>
+  </div>
+</form>
+{% endblock %}

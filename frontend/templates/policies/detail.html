@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Polisa - Szczegóły{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Polisa MH-2024-019</h1>
+  <p>Polisa mieszkaniowa dla klienta Anna Kowalska.</p>
+</section>
+
+<section class="details-grid">
+  <div class="card">
+    <h2>Podstawowe informacje</h2>
+    <ul>
+      <li><strong>Rodzaj:</strong> Mieszkaniowa</li>
+      <li><strong>Okres:</strong> 01.02.2024 - 31.01.2025</li>
+      <li><strong>Składka:</strong> 920 zł / rok</li>
+      <li><strong>Status:</strong> Aktywna</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Zakres ochrony</h2>
+    <ul>
+      <li>Ogień, zalanie, kradzież</li>
+      <li>OC w życiu prywatnym do 200 000 zł</li>
+    </ul>
+  </div>
+</section>
+
+<section class="actions">
+  <a class="button" href="/policies/1/edit">Edytuj polisę</a>
+  <a class="button secondary" href="/policies">Wróć do listy</a>
+</section>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Polisy - Lista{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Polisy</h1>
+  <p>Zestawienie polis wraz z datami obowiązywania.</p>
+  <a class="button" href="/policies/new">Dodaj polisę</a>
+</section>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Numer polisy</th>
+      <th>Klient</th>
+      <th>Rodzaj</th>
+      <th>Okres</th>
+      <th>Status</th>
+      <th>Akcje</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MH-2024-019</td>
+      <td>Anna Kowalska</td>
+      <td>Mieszkaniowa</td>
+      <td>01.02.2024 - 31.01.2025</td>
+      <td>Aktywna</td>
+      <td><a href="/policies/1">Szczegóły</a></td>
+    </tr>
+    <tr>
+      <td>TR-2024-004</td>
+      <td>Marek Nowak</td>
+      <td>Turystyczna</td>
+      <td>10.06.2024 - 20.06.2024</td>
+      <td>Wygasa</td>
+      <td><a href="/policies/2">Szczegóły</a></td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}

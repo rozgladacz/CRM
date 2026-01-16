@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Klienci - Lista{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Klienci</h1>
+  <p>Lista klientów z podstawowymi informacjami kontaktowymi.</p>
+  <a class="button" href="/clients/new">Dodaj klienta</a>
+</section>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Imię i nazwisko</th>
+      <th>Telefon</th>
+      <th>E-mail</th>
+      <th>Status</th>
+      <th>Akcje</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Anna Kowalska</td>
+      <td>+48 600 000 001</td>
+      <td>anna.kowalska@example.com</td>
+      <td>Aktywny</td>
+      <td><a href="/clients/1">Szczegóły</a></td>
+    </tr>
+    <tr>
+      <td>Marek Nowak</td>
+      <td>+48 600 000 002</td>
+      <td>marek.nowak@example.com</td>
+      <td>Do kontaktu</td>
+      <td><a href="/clients/2">Szczegóły</a></td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}

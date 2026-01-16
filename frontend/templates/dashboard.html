@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - CRM{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Dashboard</h1>
+  <p>Podsumowanie najważniejszych informacji o klientach, polisach i zdarzeniach.</p>
+</section>
+
+<section class="grid">
+  <div class="card">
+    <h2>Aktywne polisy</h2>
+    <p class="metric">128</p>
+    <p>Polisy z terminem końca w najbliższych 30 dniach: 9.</p>
+  </div>
+  <div class="card">
+    <h2>Nowe zdarzenia</h2>
+    <p class="metric">4</p>
+    <p>Oczekujące zgłoszenia od klientów.</p>
+  </div>
+  <div class="card">
+    <h2>Przypomnienia</h2>
+    <p class="metric">12</p>
+    <p>Zaplanowane kontakty na ten tydzień.</p>
+  </div>
+</section>
+{% endblock %}

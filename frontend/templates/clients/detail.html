@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Klient - Szczegóły{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Anna Kowalska</h1>
+  <p>Klientka indywidualna z aktywną polisą mieszkaniową.</p>
+</section>
+
+<section class="details-grid">
+  <div class="card">
+    <h2>Dane kontaktowe</h2>
+    <ul>
+      <li><strong>Telefon:</strong> +48 600 000 001</li>
+      <li><strong>E-mail:</strong> anna.kowalska@example.com</li>
+      <li><strong>Adres:</strong> ul. Spacerowa 12, 00-100 Warszawa</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Polisy</h2>
+    <ul>
+      <li>Polisa mieszkaniowa #MH-2024-019</li>
+      <li>Polisa OC w życiu prywatnym #OC-2023-044</li>
+    </ul>
+  </div>
+</section>
+
+<section class="actions">
+  <a class="button" href="/clients/1/edit">Edytuj klienta</a>
+  <a class="button secondary" href="/clients">Wróć do listy</a>
+</section>
+{% endblock %}
