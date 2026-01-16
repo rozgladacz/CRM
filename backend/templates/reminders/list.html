@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Lista przypomnień</h1>
+<a href="{{ url_for('reminders.create_reminder') }}">Dodaj przypomnienie</a>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Treść</th>
+            <th>Data</th>
+            <th>Klient</th>
+            <th>Wysłano</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reminder in reminders %}
+        <tr>
+            <td>{{ reminder.id }}</td>
+            <td>{{ reminder.tresc }}</td>
+            <td>{{ reminder.data_przypomnienia }}</td>
+            <td>{{ reminder.client.imie }} {{ reminder.client.nazwisko }}</td>
+            <td>{{ 'Tak' if reminder.wyslano else 'Nie' }}</td>
+            <td>
+                <a href="{{ url_for('reminders.reminder_detail', reminder_id=reminder.id) }}">Szczegóły</a>
+                <a href="{{ url_for('reminders.edit_reminder', reminder_id=reminder.id) }}">Edytuj</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">Brak przypomnień.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

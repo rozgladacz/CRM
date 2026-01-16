@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{% if mode == 'edit' %}Edytuj klienta{% else %}Dodaj klienta{% endif %}</h1>
+<form method="post">
+    <div class="form-row">
+        <label for="imie">Imię *</label>
+        <input id="imie" name="imie" type="text" value="{{ form_data.imie }}" required />
+        {% if errors.imie %}<div class="error">{{ errors.imie }}</div>{% endif %}
+    </div>
+    <div class="form-row">
+        <label for="nazwisko">Nazwisko *</label>
+        <input id="nazwisko" name="nazwisko" type="text" value="{{ form_data.nazwisko }}" required />
+        {% if errors.nazwisko %}<div class="error">{{ errors.nazwisko }}</div>{% endif %}
+    </div>
+    <div class="form-row">
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" value="{{ form_data.email }}" />
+        {% if errors.email %}<div class="error">{{ errors.email }}</div>{% endif %}
+    </div>
+    <div class="form-row">
+        <label for="telefon">Telefon</label>
+        <input id="telefon" name="telefon" type="text" value="{{ form_data.telefon }}" />
+    </div>
+    <div class="form-row">
+        <label for="adres">Adres</label>
+        <input id="adres" name="adres" type="text" value="{{ form_data.adres }}" />
+    </div>
+    <div class="actions">
+        <button type="submit">Zapisz</button>
+        <a href="{% if mode == 'edit' %}{{ url_for('clients.client_detail', client_id=client.id) }}{% else %}{{ url_for('clients.list_clients') }}{% endif %}">Anuluj</a>
+    </div>
+</form>
+{% endblock %}

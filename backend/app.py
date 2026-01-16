@@ -5,11 +5,15 @@ from flask import Flask
 from backend.auth import init_auth
 from backend.config import Config
 from backend.models import db
-from backend.routes import dashboard_bp
+from backend.routes import clients_bp, events_bp, policies_bp, reminders_bp, dashboard_bp
 
 
 def register_blueprints(app: Flask) -> None:
     """Register application blueprints."""
+    app.register_blueprint(clients_bp)
+    app.register_blueprint(policies_bp)
+    app.register_blueprint(events_bp)
+    app.register_blueprint(reminders_bp)
     app.register_blueprint(dashboard_bp)
 
 
@@ -20,6 +24,10 @@ def create_app() -> Flask:
     app.config.from_object(Config)
 
     db.init_app(app)
+
+    with app.app_context():
+        db.create_all()
+
     init_auth(app)
     register_blueprints(app)
 
