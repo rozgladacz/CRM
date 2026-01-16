@@ -5,10 +5,12 @@ from flask import Flask
 from backend.auth import init_auth
 from backend.config import Config
 from backend.models import db
+from backend.routes import dashboard_bp
 
 
 def register_blueprints(app: Flask) -> None:
     """Register application blueprints."""
+    app.register_blueprint(dashboard_bp)
 
 
 
