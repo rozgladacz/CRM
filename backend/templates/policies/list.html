@@ -2,6 +2,20 @@
 {% block content %}
 <h1>Lista polis</h1>
 <a href="{{ url_for('policies.create_policy') }}">Dodaj polisę</a>
+<form method="get">
+    <label for="policy-search">Szukaj</label>
+    <input
+        id="policy-search"
+        name="q"
+        type="search"
+        placeholder="Szukaj po numerze polisy, kliencie, produkcie..."
+        value="{{ search_query }}"
+    >
+    <button type="submit">Filtruj</button>
+    {% if search_query %}
+    <a href="{{ url_for('policies.list_policies') }}">Wyczyść</a>
+    {% endif %}
+</form>
 <table>
     <thead>
         <tr>
