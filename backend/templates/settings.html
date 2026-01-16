@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Ustawienia</h1>
+
+{% if message %}
+  <p class="{{ 'error' if message_type == 'error' else '' }}">{{ message }}</p>
+{% endif %}
+
+<section>
+  <h2>Konfiguracja SMTP</h2>
+  <form method="post" action="{{ url_for('settings.settings_view') }}">
+    <div class="form-row">
+      <label for="mail_server">Serwer SMTP</label>
+      <input id="mail_server" name="mail_server" type="text" value="{{ form_data.mail_server }}" />
+    </div>
+    <div class="form-row">
+      <label for="mail_port">Port</label>
+      <input id="mail_port" name="mail_port" type="number" min="1" max="65535" value="{{ form_data.mail_port }}" />
+      {% if errors.mail_port %}<p class="error">{{ errors.mail_port }}</p>{% endif %}
+    </div>
+    <div class="form-row">
+      <label>
+        <input type="checkbox" name="mail_use_tls" {% if form_data.mail_use_tls %}checked{% endif %} />
+        Użyj TLS
+      </label>
+    </div>
+    <div class="form-row">
+      <label for="mail_username">Użytkownik</label>
+      <input id="mail_username" name="mail_username" type="text" value="{{ form_data.mail_username }}" />
+    </div>
+    <div class="form-row">
+      <label for="mail_password">Hasło</label>
+      <input id="mail_password" name="mail_password" type="password" value="" autocomplete="new-password" />
+    </div>
+
+    <h2>Powiadomienia</h2>
+    <div class="form-row">
+      <label for="notification_email">E-mail notyfikacji</label>
+      <input id="notification_email" name="notification_email" type="email" value="{{ form_data.notification_email }}" />
+      {% if errors.notification_email %}<p class="error">{{ errors.notification_email }}</p>{% endif %}
+    </div>
+    <div class="form-row">
+      <label for="send_hour">Godzina wysyłki</label>
+      <select id="send_hour" name="send_hour">
+        {% for hour in range(0, 24) %}
+          <option value="{{ hour }}" {% if form_data.send_hour == hour|string %}selected{% endif %}>{{ "%02d"|format(hour) }}:00</option>
+        {% endfor %}
+      </select>
+      {% if errors.send_hour %}<p class="error">{{ errors.send_hour }}</p>{% endif %}
+    </div>
+
+    <div class="actions">
+      <button type="submit">Zapisz ustawienia</button>
+    </div>
+  </form>
+</section>
+
+<section>
+  <h2>Test SMTP</h2>
+  <form method="post" action="{{ url_for('settings.send_test_email') }}">
+    <div class="actions">
+      <button type="submit">Wyślij wiadomość testową</button>
+    </div>
+  </form>
+</section>
+{% endblock %}
