@@ -6,6 +6,7 @@ from backend.auth import init_auth
 from backend.config import Config
 from backend.models import db
 from backend.routes import clients_bp, events_bp, policies_bp, reminders_bp, dashboard_bp
+from backend.scheduler import init_scheduler
 
 
 def register_blueprints(app: Flask) -> None:
@@ -30,6 +31,7 @@ def create_app() -> Flask:
 
     init_auth(app)
     register_blueprints(app)
+    app.scheduler = init_scheduler(app)
 
     return app
 
