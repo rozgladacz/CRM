@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from flask import Flask
 
+from backend.auth import init_auth
 from backend.config import Config
+from backend.models import db
 
 
 def register_blueprints(app: Flask) -> None:
@@ -15,6 +17,8 @@ def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_object(Config)
 
+    db.init_app(app)
+    init_auth(app)
     register_blueprints(app)
 
     return app
