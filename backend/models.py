@@ -68,7 +68,7 @@ class Reminder(db.Model):
     tresc = db.Column(db.Text, nullable=False)
     data_przypomnienia = db.Column(db.DateTime, nullable=False)
     wyslano = db.Column(db.Boolean, default=False, nullable=False)
-    client_id = db.Column(db.Integer, db.ForeignKey("clients.id"), nullable=False)
+    client_id = db.Column(db.Integer, db.ForeignKey("clients.id"), nullable=True)
     policy_id = db.Column(db.Integer, db.ForeignKey("policies.id"), nullable=True)
 
     client = db.relationship("Client", back_populates="reminders")

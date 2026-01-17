@@ -53,8 +53,6 @@ def create_reminder() -> str:
             errors["tresc"] = "Treść przypomnienia jest wymagana."
         if not form_data["data_przypomnienia"]:
             errors["data_przypomnienia"] = "Data przypomnienia jest wymagana."
-        if not form_data["client_id"]:
-            errors["client_id"] = "Wybierz klienta."
 
         data_przypomnienia: datetime | None = None
         client_id = None
@@ -122,7 +120,7 @@ def edit_reminder(reminder_id: int) -> str:
         "tresc": reminder.tresc,
         "data_przypomnienia": reminder.data_przypomnienia.strftime("%Y-%m-%dT%H:%M"),
         "wyslano": reminder.wyslano,
-        "client_id": str(reminder.client_id),
+        "client_id": str(reminder.client_id) if reminder.client_id else "",
         "policy_id": str(reminder.policy_id) if reminder.policy_id else "",
     }
 
@@ -139,8 +137,6 @@ def edit_reminder(reminder_id: int) -> str:
             errors["tresc"] = "Treść przypomnienia jest wymagana."
         if not form_data["data_przypomnienia"]:
             errors["data_przypomnienia"] = "Data przypomnienia jest wymagana."
-        if not form_data["client_id"]:
-            errors["client_id"] = "Wybierz klienta."
 
         data_przypomnienia: datetime | None = None
         client_id = None

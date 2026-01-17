@@ -4,7 +4,7 @@
 <p><strong>Treść:</strong> {{ reminder.tresc }}</p>
 <p><strong>Data przypomnienia:</strong> {{ reminder.data_przypomnienia }}</p>
 <p><strong>Wysłano:</strong> {{ 'Tak' if reminder.wyslano else 'Nie' }}</p>
-<p><strong>Klient:</strong> {{ reminder.client.imie }} {{ reminder.client.nazwisko }}</p>
+<p><strong>Klient:</strong> {{ reminder.client.imie ~ ' ' ~ reminder.client.nazwisko if reminder.client else '— brak —' }}</p>
 <p><strong>Polisa:</strong> {{ reminder.policy.numer_polisy if reminder.policy else '-' }}</p>
 <div class="actions">
     <a href="{{ url_for('reminders.edit_reminder', reminder_id=reminder.id) }}">Edytuj</a>
