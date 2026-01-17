@@ -17,6 +17,10 @@ Prosty szkielet aplikacji CRM przygotowany do dalszego rozwoju (backend, fronten
    pip install -r requirements.txt
    ```
 3. Uruchom aplikację zgodnie z przyszłą dokumentacją w katalogu `docs/`.
+   Przykładowe uruchomienie:
+   ```bash
+   waitress-serve --host 0.0.0.0 --port 5000 app:app
+   ```
 
 ## Backup bazy danych
 Domyślnie aplikacja przechowuje dane w pliku SQLite `crm.sqlite3` w katalogu głównym repozytorium (możesz to zmienić przez zmienną `DATABASE_URL`).
