@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 from pathlib import Path
-import sqlite3
 from urllib.parse import unquote, urlparse
 
+from flask import Flask
+
 from backend.config import BASE_DIR, Config
+from backend.models import db
 
 
 def _resolve_sqlite_path(database_url: str | None = None) -> Path:
@@ -29,26 +31,13 @@ def init_db(database_url: str | None = None) -> Path:
     db_path = _resolve_sqlite_path(database_url)
     db_path.parent.mkdir(parents=True, exist_ok=True)
 
-    with sqlite3.connect(db_path) as connection:
-        connection.execute("PRAGMA foreign_keys = ON")
-        connection.executescript(
-            """
-            CREATE TABLE IF NOT EXISTS customers (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                email TEXT,
-                phone TEXT,
-                created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-            );
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    if database_url:
+        app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+    db.init_app(app)
 
-            CREATE TABLE IF NOT EXISTS interactions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                customer_id INTEGER NOT NULL,
-                note TEXT NOT NULL,
-                created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
-            );
-            """
-        )
+    with app.app_context():
+        db.create_all()
 
     return db_path
