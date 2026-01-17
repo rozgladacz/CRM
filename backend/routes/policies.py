@@ -5,6 +5,7 @@ from datetime import date
 from flask import Blueprint, redirect, render_template, request, url_for
 from sqlalchemy import or_
 
+from backend.auth import auth_required
 from backend.models import Client, Policy, db
 from backend.routes.utils import clean_str, parse_date, parse_decimal, to_int
 
@@ -12,6 +13,7 @@ policies_bp = Blueprint("policies", __name__, url_prefix="/policies")
 
 
 @policies_bp.get("/")
+@auth_required
 def list_policies() -> str:
     search_query = clean_str(request.args.get("q"))
     query = Policy.query
@@ -31,12 +33,14 @@ def list_policies() -> str:
 
 
 @policies_bp.get("/<int:policy_id>")
+@auth_required
 def policy_detail(policy_id: int) -> str:
     policy = Policy.query.get_or_404(policy_id)
     return render_template("policies/detail.html", policy=policy)
 
 
 @policies_bp.route("/new", methods=["GET", "POST"])
+@auth_required
 def create_policy() -> str:
     errors: dict[str, str] = {}
     clients = Client.query.order_by(Client.nazwisko.asc(), Client.imie.asc()).all()
@@ -128,6 +132,7 @@ def create_policy() -> str:
 
 
 @policies_bp.route("/<int:policy_id>/edit", methods=["GET", "POST"])
+@auth_required
 def edit_policy(policy_id: int) -> str:
     policy = Policy.query.get_or_404(policy_id)
     errors: dict[str, str] = {}
@@ -223,6 +228,7 @@ def edit_policy(policy_id: int) -> str:
 
 
 @policies_bp.post("/<int:policy_id>/delete")
+@auth_required
 def delete_policy(policy_id: int) -> str:
     policy = Policy.query.get_or_404(policy_id)
     db.session.delete(policy)

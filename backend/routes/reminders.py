@@ -4,6 +4,7 @@ from datetime import datetime
 
 from flask import Blueprint, redirect, render_template, request, url_for
 
+from backend.auth import auth_required
 from backend.models import Client, Policy, Reminder, db
 from backend.routes.utils import clean_str, parse_datetime, to_int
 
@@ -11,18 +12,21 @@ reminders_bp = Blueprint("reminders", __name__, url_prefix="/reminders")
 
 
 @reminders_bp.get("/")
+@auth_required
 def list_reminders() -> str:
     reminders = Reminder.query.order_by(Reminder.data_przypomnienia.desc()).all()
     return render_template("reminders/list.html", reminders=reminders)
 
 
 @reminders_bp.get("/<int:reminder_id>")
+@auth_required
 def reminder_detail(reminder_id: int) -> str:
     reminder = Reminder.query.get_or_404(reminder_id)
     return render_template("reminders/detail.html", reminder=reminder)
 
 
 @reminders_bp.route("/new", methods=["GET", "POST"])
+@auth_required
 def create_reminder() -> str:
     errors: dict[str, str] = {}
     clients = Client.query.order_by(Client.nazwisko.asc(), Client.imie.asc()).all()
@@ -107,6 +111,7 @@ def create_reminder() -> str:
 
 
 @reminders_bp.route("/<int:reminder_id>/edit", methods=["GET", "POST"])
+@auth_required
 def edit_reminder(reminder_id: int) -> str:
     reminder = Reminder.query.get_or_404(reminder_id)
     errors: dict[str, str] = {}
@@ -190,6 +195,7 @@ def edit_reminder(reminder_id: int) -> str:
 
 
 @reminders_bp.post("/<int:reminder_id>/delete")
+@auth_required
 def delete_reminder(reminder_id: int) -> str:
     reminder = Reminder.query.get_or_404(reminder_id)
     db.session.delete(reminder)
