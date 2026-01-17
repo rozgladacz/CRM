@@ -32,9 +32,46 @@ def _build_reminder_body(reminder: Reminder) -> str:
         f"Przypomnienie: {reminder.tresc}",
         f"Data przypomnienia: {reminder.data_przypomnienia:%Y-%m-%d %H:%M}",
     ]
+    if reminder.client:
+        client = reminder.client
+        lines.append("Dane klienta:")
+        lines.append(f" - Imię i nazwisko: {client.imie} {client.nazwisko}")
+        if client.email:
+            lines.append(f" - Email: {client.email}")
+        if client.telefon:
+            lines.append(f" - Telefon: {client.telefon}")
+        if client.adres:
+            lines.append(f" - Adres: {client.adres}")
     if reminder.policy:
-        lines.append(f"Polisa: {reminder.policy.numer_polisy}")
+        policy = reminder.policy
+        lines.append("Dane polisy:")
+        lines.append(f" - Numer polisy: {policy.numer_polisy}")
+        if policy.produkt:
+            lines.append(f" - Produkt: {policy.produkt}")
+        if policy.data_poczatku:
+            lines.append(f" - Data początku: {policy.data_poczatku:%Y-%m-%d}")
+        if policy.data_konca:
+            lines.append(f" - Data końca: {policy.data_konca:%Y-%m-%d}")
+        if policy.skladka is not None:
+            lines.append(f" - Składka: {policy.skladka}")
+        if policy.status:
+            lines.append(f" - Status: {policy.status}")
     return "\n".join(lines)
+
+
+def _get_agent_recipient(app: Flask) -> str | None:
+    with app.app_context():
+        try:
+            user_config = UserConfig.query.first()
+        except Exception:
+            logger.exception("Failed to load UserConfig for reminder recipient")
+            user_config = None
+
+        recipient = user_config.email if user_config and user_config.email else None
+        if recipient:
+            return recipient
+
+        return app.config.get("MAIL_DEFAULT_SENDER")
 
 
 def send_due_reminders(app: Flask) -> None:
@@ -53,11 +90,12 @@ def send_due_reminders(app: Flask) -> None:
             logger.info("No reminders to send")
             return
 
+        recipient = _get_agent_recipient(app)
+        if not recipient:
+            logger.warning("No agent email configured for reminders")
+            return
+
         for reminder in reminders:
-            recipient = reminder.client.email if reminder.client else None
-            if not recipient:
-                logger.warning("Reminder %s has no recipient email", reminder.id)
-                continue
 
             subject = "Przypomnienie"
             body = _build_reminder_body(reminder)
