@@ -12,6 +12,9 @@ class Config:
 
     PORT = int(os.getenv("PORT", "5000"))
 
+    # Timezone
+    TIMEZONE = os.getenv("TIMEZONE", "Europe/Warsaw")
+
     # Database
     SQLALCHEMY_DATABASE_URI = os.getenv(
         "DATABASE_URL", f"sqlite:///{BASE_DIR / 'crm.sqlite3'}"

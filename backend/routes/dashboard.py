@@ -1,13 +1,29 @@
 from __future__ import annotations
 
 from datetime import datetime, time, timedelta
+import logging
+from zoneinfo import ZoneInfo
 
 from flask import Blueprint, render_template
 
 from backend.auth import auth_required
+from backend.config import Config
 from backend.models import Reminder
 
 dashboard_bp = Blueprint("dashboard", __name__)
+logger = logging.getLogger(__name__)
+
+
+def _get_timezone() -> ZoneInfo:
+    try:
+        return ZoneInfo(Config.TIMEZONE)
+    except Exception:
+        logger.exception("Invalid TIMEZONE configuration: %s", Config.TIMEZONE)
+        return ZoneInfo("UTC")
+
+
+def _local_now_naive() -> datetime:
+    return datetime.now(_get_timezone()).replace(tzinfo=None)
 
 
 def _serialize_reminder(reminder: Reminder, status_label: str, status_class: str) -> dict:
@@ -21,7 +37,7 @@ def _serialize_reminder(reminder: Reminder, status_label: str, status_class: str
 @dashboard_bp.get("/dashboard")
 @auth_required
 def dashboard() -> str:
-    now = datetime.utcnow()
+    now = _local_now_naive()
     today = now.date()
     start_today = datetime.combine(today, time.min)
     end_today = datetime.combine(today, time.max)

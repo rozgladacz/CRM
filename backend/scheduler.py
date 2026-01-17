@@ -2,15 +2,29 @@ from __future__ import annotations
 
 from datetime import datetime
 import logging
+from zoneinfo import ZoneInfo
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
 
+from backend.config import Config
 from backend.emailer import send_email
 from backend.models import Reminder, UserConfig, db
 
 
 logger = logging.getLogger(__name__)
+
+
+def _get_timezone() -> ZoneInfo:
+    try:
+        return ZoneInfo(Config.TIMEZONE)
+    except Exception:
+        logger.exception("Invalid TIMEZONE configuration: %s", Config.TIMEZONE)
+        return ZoneInfo("UTC")
+
+
+def _local_now_naive() -> datetime:
+    return datetime.now(_get_timezone()).replace(tzinfo=None)
 
 
 def _get_send_hour(app: Flask) -> int:
@@ -39,7 +53,7 @@ def _build_reminder_body(reminder: Reminder) -> str:
 
 def send_due_reminders(app: Flask) -> None:
     with app.app_context():
-        now = datetime.utcnow()
+        now = _local_now_naive()
         reminders = (
             Reminder.query.filter(
                 Reminder.wyslano.is_(False),
@@ -70,7 +84,7 @@ def send_due_reminders(app: Flask) -> None:
 
 def init_scheduler(app: Flask) -> BackgroundScheduler:
     send_hour = _get_send_hour(app)
-    scheduler = BackgroundScheduler()
+    scheduler = BackgroundScheduler(timezone=_get_timezone())
     scheduler.add_job(
         send_due_reminders,
         "cron",
