@@ -4,6 +4,7 @@ from datetime import datetime
 
 from flask import Blueprint, redirect, render_template, request, url_for
 
+from backend.auth import auth_required
 from backend.models import Client, Event, Policy, db
 from backend.routes.utils import clean_str, parse_datetime, to_int
 
@@ -11,18 +12,21 @@ events_bp = Blueprint("events", __name__, url_prefix="/events")
 
 
 @events_bp.get("/")
+@auth_required
 def list_events() -> str:
     events = Event.query.order_by(Event.data_wydarzenia.desc()).all()
     return render_template("events/list.html", events=events)
 
 
 @events_bp.get("/<int:event_id>")
+@auth_required
 def event_detail(event_id: int) -> str:
     event = Event.query.get_or_404(event_id)
     return render_template("events/detail.html", event=event)
 
 
 @events_bp.route("/new", methods=["GET", "POST"])
+@auth_required
 def create_event() -> str:
     errors: dict[str, str] = {}
     clients = Client.query.order_by(Client.nazwisko.asc(), Client.imie.asc()).all()
@@ -107,6 +111,7 @@ def create_event() -> str:
 
 
 @events_bp.route("/<int:event_id>/edit", methods=["GET", "POST"])
+@auth_required
 def edit_event(event_id: int) -> str:
     event = Event.query.get_or_404(event_id)
     errors: dict[str, str] = {}
@@ -190,6 +195,7 @@ def edit_event(event_id: int) -> str:
 
 
 @events_bp.post("/<int:event_id>/delete")
+@auth_required
 def delete_event(event_id: int) -> str:
     event = Event.query.get_or_404(event_id)
     db.session.delete(event)

@@ -24,6 +24,11 @@
         <a href="{{ url_for('events.list_events') }}">Wydarzenia</a>
         <a href="{{ url_for('reminders.list_reminders') }}">Przypomnienia</a>
         <a href="{{ url_for('settings.settings_view') }}">Ustawienia</a>
+        {% if current_user.is_authenticated %}
+            <form method="post" action="{{ url_for('auth.logout') }}" style="display: inline;">
+                <button type="submit">Wyloguj</button>
+            </form>
+        {% endif %}
     </nav>
     <hr />
     {% block content %}{% endblock %}

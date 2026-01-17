@@ -3,6 +3,7 @@ from __future__ import annotations
 from flask import Blueprint, redirect, render_template, request, url_for
 from sqlalchemy import or_
 
+from backend.auth import auth_required
 from backend.models import Client, db
 from backend.routes.utils import clean_str, validate_email
 
@@ -10,6 +11,7 @@ clients_bp = Blueprint("clients", __name__, url_prefix="/clients")
 
 
 @clients_bp.get("/")
+@auth_required
 def list_clients() -> str:
     search_query = clean_str(request.args.get("q"))
     query = Client.query
@@ -29,12 +31,14 @@ def list_clients() -> str:
 
 
 @clients_bp.get("/<int:client_id>")
+@auth_required
 def client_detail(client_id: int) -> str:
     client = Client.query.get_or_404(client_id)
     return render_template("clients/detail.html", client=client)
 
 
 @clients_bp.route("/new", methods=["GET", "POST"])
+@auth_required
 def create_client() -> str:
     errors: dict[str, str] = {}
     form_data = {
@@ -71,6 +75,7 @@ def create_client() -> str:
 
 
 @clients_bp.route("/<int:client_id>/edit", methods=["GET", "POST"])
+@auth_required
 def edit_client(client_id: int) -> str:
     client = Client.query.get_or_404(client_id)
     errors: dict[str, str] = {}
@@ -112,6 +117,7 @@ def edit_client(client_id: int) -> str:
 
 
 @clients_bp.post("/<int:client_id>/delete")
+@auth_required
 def delete_client(client_id: int) -> str:
     client = Client.query.get_or_404(client_id)
     db.session.delete(client)

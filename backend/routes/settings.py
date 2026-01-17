@@ -4,6 +4,7 @@ import logging
 
 from flask import Blueprint, current_app, redirect, render_template, request, url_for
 
+from backend.auth import auth_required
 from backend.emailer import send_email
 from backend.models import UserConfig, db
 from backend.routes.utils import clean_str, to_int, validate_email
@@ -56,6 +57,7 @@ def _reschedule_daily_job(send_hour: int) -> None:
 
 
 @settings_bp.route("/", methods=["GET", "POST"])
+@auth_required
 def settings_view() -> str:
     errors: dict[str, str] = {}
     message = ""
@@ -141,6 +143,7 @@ def settings_view() -> str:
 
 
 @settings_bp.post("/test-email")
+@auth_required
 def send_test_email() -> str:
     user_config = _get_user_config()
     if not user_config or not user_config.email:

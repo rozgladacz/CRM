@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <title>Logowanie</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 24px; }
+        .error { color: #b00020; font-size: 0.9rem; margin-bottom: 12px; }
+        .form-row { margin-bottom: 12px; }
+        label { display: block; font-weight: 600; margin-bottom: 4px; }
+        input { width: 100%; max-width: 360px; padding: 6px; }
+        button { padding: 8px 16px; }
+    </style>
+</head>
+<body>
+    <h1>Logowanie</h1>
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+    <form method="post" action="{{ url_for('auth.login') }}">
+        <input type="hidden" name="next" value="{{ next_url }}" />
+        <div class="form-row">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" value="{{ email or '' }}" required />
+        </div>
+        <div class="form-row">
+            <label for="password">Hasło</label>
+            <input id="password" name="password" type="password" required />
+        </div>
+        <div class="form-row">
+            <label>
+                <input name="remember" type="checkbox" value="1" />
+                Zapamiętaj mnie
+            </label>
+        </div>
+        <button type="submit">Zaloguj</button>
+    </form>
+</body>
+</html>

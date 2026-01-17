@@ -5,6 +5,7 @@ from io import StringIO
 
 from flask import Blueprint, Response
 
+from backend.auth import auth_required
 from backend.models import Client, Policy
 
 export_bp = Blueprint("export", __name__, url_prefix="/export")
@@ -26,6 +27,7 @@ def _format_value(value: object | None) -> str:
 
 
 @export_bp.get("/clients.csv")
+@auth_required
 def export_clients() -> Response:
     clients = Client.query.order_by(Client.nazwisko.asc(), Client.imie.asc()).all()
     rows = [
@@ -55,6 +57,7 @@ def export_clients() -> Response:
 
 
 @export_bp.get("/policies.csv")
+@auth_required
 def export_policies() -> Response:
     policies = (
         Policy.query.join(Client)
